@@ -1,0 +1,28 @@
+{
+  "builders": [{
+    "type": "amazon-ebs",
+    "region": "eu-west-2",
+    "source_ami_filter": {
+      "filters": {
+        "virtualization-type": "hvm",
+        "name": "amzn2-ami-hvm-2.0*",
+        "root-device-type": "ebs",
+        "architecture": "x86_64"
+      },
+      "owners": ["137112412989"],
+      "most_recent": true
+    },
+    "instance_type": "t2.micro",
+    "ssh_username": "ec2-user",
+    "ami_name": "plex-server {{timestamp}}"
+  }],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "wget https://downloads.plex.tv/plex-media-server-new/1.18.2.2058-e67a4e892/redhat/plexmediaserver-1.18.2.2058-e67a4e892.x86_64.rpm",
+        "sudo yum install --assumeyes plexmediaserver-1.18.2.2058-e67a4e892.x86_64.rpm"
+      ]
+    }
+  ]
+}
